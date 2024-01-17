@@ -36,7 +36,7 @@
   }
 
   .comment {
-    @apply flex gap-4 items-start justify-start bg-white pl-5 pr-8 w-full lg:w-max py-3 border border-[#dddddd] rounded-lg; 
+    @apply flex gap-4 items-start justify-start bg-white pl-5 pr-8 w-full lg:w-max py-3 border border-[#dddddd] cursor-default rounded-lg hover:scale-110 ease-in-out duration-300; 
   }
 
   .hero {
