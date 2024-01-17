@@ -77,7 +77,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
 
   const sendEmail = async (filteredComments, email) => {
     try {
-      const response = await fetch(`/api/sendgrid/sendEmail?email=${email}`, {
+      const response = await fetch(`/api/resend/sendEmail?email=${email}`, {
         method: "POST", 
         headers: {
           "Content-Type": "application/json",
@@ -150,7 +150,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
         <div className="text-center font-bold pt-6 md:pt-0">
           <p className="text-green-400 pb-6 text-2xl">Done!</p> 
           <p className="text-lg text-md pb-3 words-break">Check {email}"s inbox for your user feedback, bug reports and questions</p>
-          <p className="font-light text-base pb-12">Thank you for using Cornelio 🥳</p>
+          <p className="font-light text-base pb-12">Thank you for using Feedby 🥳</p>
           <a href="https://www.gmail.com" target="_blank">
             <button className="text-base mb-6">Go to my inbox</button>
           </a>

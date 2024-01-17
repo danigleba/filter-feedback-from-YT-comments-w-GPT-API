@@ -8,10 +8,10 @@ export default function Footer() {
                 <div className="flex flex-col items-center md:items-start justify-center">
                     <div className="flex items-center justify-center md:justify-start gap-2">
                         <Image alt="icon" src="/icon.png" width={30} height={40}></Image>
-                        <p className="text-[#cfcfcf] font-semibold text-lg">Cornelio</p>
+                        <p className="text-[#cfcfcf] font-semibold text-lg">Feedby</p>
                     </div>
                     <p className="text-sm pt-3 text-center md:text-left">Filter user feedback from your comment section</p>
-                    <p className="text-sm text-center md:text-left">Cornelio © 2024 All rights reserved</p>
+                    <p className="text-sm text-center md:text-left">Feedby © 2024 All rights reserved</p>
                 </div>
                 <div className="md:flex md:justify-end items-center space-y-12 md:space-y-0 gap-24 text-lg md:text-sm">
                     {/*Social*/}

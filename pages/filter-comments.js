@@ -1,5 +1,6 @@
 import Head from "next/head"
 import Image from "next/image"
+import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { Elements } from "@stripe/react-stripe-js"
 import { loadStripe } from "@stripe/stripe-js"
@@ -16,6 +17,7 @@ const inter = Inter({ subsets: ["latin"]})
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY_TEST)
 
 export default function FilterComments() {
+    const router = useRouter()
     const [link, setLink] = useState("")
     const [loading, setLoading] = useState(false)
     const [video, setVideo] = useState(null)
@@ -57,12 +59,12 @@ export default function FilterComments() {
         try {
             const response = await fetch(`/api/youtube/getVideo?video_id=${videoId}`)
             if (!response.ok) {
-              console.log("We didn't found that video 🤷‍♀️. Try a different URL")
+              Router.reload()
             }
             const data = await response.json()
             setVideo(data)
           } catch (error) {
-            console.log("We didn`t found that video 🤷‍♀️. Try a different URL")
+            router.reload()
         }
     }
 
@@ -90,24 +92,24 @@ export default function FilterComments() {
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
                 <meta name="description" content="Your YouTube videos` comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox."/>
                 {/* Open Graph Meta Tags */}
-                <meta property="og:title" content="Cornelio | Filter user feedback from your comment section" />
+                <meta property="og:title" content="Feedby | Filter user feedback from your comment section" />
                 <meta property="og:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
                 <meta property="og:image" content="/icon.png" />
-                <meta property="og:url" content="getcornelio.com/filter-comments" />
+                <meta property="og:url" content="getFeedby.com/filter-comments" />
                 <meta property="og:type" content="website" />
                 {/* Twitter Meta Tags */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content="Cornelio | Filter user feedback from your comment section" />
+                <meta name="twitter:title" content="Feedby | Filter user feedback from your comment section" />
                 <meta name="twitter:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
                 <meta name="twitter:image" content="/icon.png" />
                 {/* Favicon */}
                 <link rel="icon" href="/icon.png" />
                 {/* Page Title */}
-                <title>Cornelio | Filter user feedback from your comment section</title>
+                <title>Feedby | Filter user feedback from your comment section</title>
             </Head>
             <main className={`${inter.className} bg-[#212121]`}>
                 <Header />
-                <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20 ${!video ? "h-96" : ""}`}>
+                <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20 ${!video ? "h-96 mb-48" : ""}`}>
                     {!video && (
                         <>
                             <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-6`}>Paste a YouTube link</p>

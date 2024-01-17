@@ -19,7 +19,7 @@ export default function Headers() {
       <Link href="/">
         <div className="flex items-center justify-start gap-2">
           <Image alt="Icon" src="/icon.png" width={30} height={30}></Image>
-          <p className="text-[#cfcfcf] font-semibold text-lg">Cornelio</p>
+          <p className="text-[#cfcfcf] font-semibold text-lg">Feedby</p>
         </div>
       </Link>
       {router.pathname === "/" && (

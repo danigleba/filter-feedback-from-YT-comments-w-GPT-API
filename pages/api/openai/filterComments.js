@@ -1,5 +1,9 @@
 import OpenAI from "openai"
 
+export const config = {
+    maxDuration: 300
+}
+
 export default async function handler(req, res) {
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY})
     const { comments } = req.body

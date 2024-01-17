@@ -19,20 +19,20 @@ export default function Index() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox."/>
         {/* Open Graph Meta Tags */}
-        <meta property="og:title" content="Cornelio | Filter user feedback from your comment section" />
+        <meta property="og:title" content="Feedby | Filter user feedback from your comment section" />
         <meta property="og:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
         <meta property="og:image" content="/icon.png" />
-        <meta property="og:url" content="getcornelio.com" />
+        <meta property="og:url" content="getFeedby.com" />
         <meta property="og:type" content="website" />
         {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Cornelio | Filter user feedback from your comment section" />
+        <meta name="twitter:title" content="Feedby | Filter user feedback from your comment section" />
         <meta name="twitter:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
         <meta name="twitter:image" content="/icon.png" />
         {/* Favicon */}
         <link rel="icon" href="/icon.png" />
         {/* Page Title */}
-        <title>Cornelio | Filter user feedback from your comment section</title>
+        <title>Feedby | Filter user feedback from your comment section</title>
       </Head>
       <main className={`${inter.className} bg-[#212121]`} >
         <Header/>
