@@ -89,8 +89,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       }
 
       const data = await response.json()
-      console.log(data)
-
       if (data.message == "Email sent.") setStatus("Email sent")
     } 
     catch (error) {
@@ -100,13 +98,9 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
 
   const handleSuccesfulPayment = async () => {
     setStatus("Filtering comments")
-    console.log("Filtering Comments")
     const comments = await getAllComments()
-    console.log(comments)
     const filteredComments = await filterComments(comments)
-    console.log(filteredComments)
     sendEmail(filteredComments, email)
-    console.log("Email sent")
   }
   return (
     <>

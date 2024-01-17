@@ -109,7 +109,7 @@ export default function FilterComments() {
             </Head>
             <main className={`${inter.className} bg-[#212121]`}>
                 <Header />
-                <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20 ${!video ? "h-96 mb-48" : ""}`}>
+                <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20  ${!video ? "mb-48 h-96" : "min-h-96"}`}>
                     {!video && (
                         <>
                             <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-6`}>Paste a YouTube link</p>
