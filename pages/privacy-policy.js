@@ -32,7 +32,7 @@ export default function PrivacyPolicy() {
                 {/* Page Title */}
                 <title>Feedby | Filter user feedback from your comment section</title>
             </Head>
-            <main className="bg-[#212121]" >
+            <main className="bg-[#212121]">
                 <Header />
                 <div className="legal-doc">
                     <div className="flex justify-center items-center w-full">
@@ -51,35 +51,35 @@ export default function PrivacyPolicy() {
                                 <p className={`${livvic.className} legal-title`}>Information Collected</p>
                                 <p className="legal-text">We collect personal information you provide when using Feedby, including but not limited to your name, email address, and payment details processed through Stripe.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Use of Information</p>
                                 <p className="legal-text">We use your information to provide and improve Feedby services, process payments, and communicate with you. We do not sell or share your information with third parties, except as required by law.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Payment Processing</p>
                                 <p className="legal-text">Payment information is securely processed by Stripe. We do not store your payment details on our servers.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Cookies and Tracking</p>
                                 <p className="legal-text">Feedby may use cookies and similar technologies to enhance your user experience and gather information about how you use our platform.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Data Security</p>
                                 <p className="legal-text">We implement industry-standard security measures to protect your information. However, no method of transmission over the internet or electronic storage is 100% secure.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Third-Party Links</p>
                                 <p className="legal-text">Feedby may contain links to third-party websites. We are not responsible for the privacy practices of these websites. Please review the privacy policies of third-party sites.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Children"s Privacy</p>
                                 <p className="legal-text">Feedby is not intended for children under 18. We do not knowingly collect or store information from individuals under 18.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Changes to the Privacy Policy</p>
                                 <p className="legal-text">We reserve the right to modify this Privacy Policy at any time. Changes will be effective upon posting to the Feedby website.</p>
                             </div>
-                            <div >
+                            <div>
                                 <p className={`${livvic.className} legal-title`}>Governing Law</p>
                                 <p className="legal-text">This Privacy Policy is governed by the laws of Spain.</p>
                             </div>
