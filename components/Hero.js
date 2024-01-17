@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { Livvic } from "next/font/google"
 import Testimonials from "@/components/Testimonials"
+import LoomVideo from "@/components/LoomVideo"
 
 const livvic = Livvic({ subsets: ["latin"], weight: "700"})
 
@@ -16,10 +17,7 @@ export default function Hero() {
                 </div>
                 <Testimonials />
             </div>
-            {/*Video*/}
-            <div className="flex items-start justifuy-center h-full pt-8">
-                <div className="w-full aspect-video bg-white rounded-xl">Video</div>
-            </div>
+            <LoomVideo />
         </div>
     )
 }
