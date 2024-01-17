@@ -9,9 +9,9 @@ export default async function handler(req, res) {
 
     try { 
         resend.emails.send({
-            from: "daniglebapuig@resend.com",
+            from: "Feedby@emails.danigleba.com",
             to: "daniglebapuig@gmail.com",
-            subject: "💬 Your users' feedback is ready! - Feedby",
+            subject: "💬 Your users' feedback is ready!",
             html: `<h2>Thanks for using Feedby! 🥳 Here are the comments our AI has filtered from your video:</h2> <h3><strong>Useful feedback:</strong></h3> ${parsedComments.useful_feedback} <br/><br/> <h3><strong>Questions:</strong></h3> ${parsedComments.questions} <br/><br/> <h3><strong>Bug reports:</strong></h3> ${parsedComments.bug_reports} `,
         })
         res.status(200).json({ message: "Email sent." })
