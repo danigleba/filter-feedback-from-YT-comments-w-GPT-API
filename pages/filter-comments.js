@@ -109,7 +109,7 @@ export default function FilterComments() {
             </Head>
             <main className={`${inter.className} bg-[#212121]`}>
                 <Header />
-                <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20  ${!video ? "mb-48 h-96" : "min-h-96"}`}>
+                    <div className={`flex flex-col items-center justify-center w-full px-8 md:px-20  ${!video ? "mb-48 h-96" : "min-h-96"}`}>
                     {!video && (
                         <>
                             <p className={`${livvic.className} text-center text-2xl md:text-3xl pb-6`}>Paste a YouTube link</p>
@@ -151,13 +151,13 @@ export default function FilterComments() {
                                 {/*Selected video summary*/}
                                 <div className="flex flex-col items-center justify-center">
                                     <div className="w-full aspect-video rounded-lg overflow-hidden">
-                                    <Image
-                                        src={video.thumbnail}
-                                        alt="Sample Image"
-                                        className="w-full h-auto"
-                                        width={750}
-                                        height={750}
-                                    />                            
+                                        <Image
+                                            src={video.thumbnail}
+                                            alt="Sample Image"
+                                            className="w-full h-auto"
+                                            width={750}
+                                            height={750}
+                                        />                            
                                     </div>
                                     <div className="flex gap-4 pt-4 w-full">
                                         <div className="text-left">

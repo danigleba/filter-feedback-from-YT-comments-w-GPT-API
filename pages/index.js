@@ -34,7 +34,7 @@ export default function Index() {
         {/* Page Title */}
         <title>Feedby | Filter user feedback from your comment section</title>
       </Head>
-      <main className={`${inter.className} bg-[#212121]`} >
+      <main className={`${inter.className}`} >
         <Header/>
         <Hero />     
         <FeaturedOn />
