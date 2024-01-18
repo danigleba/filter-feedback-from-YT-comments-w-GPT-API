@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY_TEST)
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY)
   const numberOfComments = req.query.numberOfComments
   const price = numberOfComments >= 500 ? (parseFloat(numberOfComments).toFixed(2) / 1000 * 100) : 100 
 
