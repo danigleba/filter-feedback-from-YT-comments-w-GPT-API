@@ -89,7 +89,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       }
 
       const data = await response.json()
-      if (data.message == "Email sent.") setStatus("Email sent")
+      if (data.data) setStatus("Email sent")
     } 
     catch (error) {
       console.error("Error fetching comments:", error.message)
