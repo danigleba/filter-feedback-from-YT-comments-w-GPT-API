@@ -68,6 +68,29 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       }
 
       const data = await response.json()
+      console.log(data)
+      return data.data.message.content
+    } 
+    catch (error) {
+      console.error("Error fetching comments:", error.message)
+    } 
+  }
+
+  const uploadToFirebase = async (aiResponse) => {
+    try {
+      const response = await fetch(`/api/firebase/uploadReport?email=${email}&videoId=${videoId}`, {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ aiResponse }), 
+      })
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`)
+      }
+
+      const data = await response.json()
+      console.log(data)
       return data.data.message.content
     } 
     catch (error) {
@@ -77,7 +100,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
 
   const sendEmail = async (filteredComments, email) => {
     try {
-      const response = await fetch(`/api/resend/sendEmail?email=${email}`, {
+      const response = await fetch(`/api/resend/sendEmail?email=${email}&videoId=${videoId}`, {
         method: "POST", 
         headers: {
           "Content-Type": "application/json",
@@ -89,6 +112,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       }
 
       const data = await response.json()
+      console.log(data)
       if (data.data) setStatus("Email sent")
     } 
     catch (error) {
@@ -100,6 +124,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
     setStatus("Filtering comments")
     const comments = await getAllComments()
     const filteredComments = await filterComments(comments)
+    await uploadToFirebase(filteredComments)
     sendEmail(filteredComments, email)
   }
   return (

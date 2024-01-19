@@ -14,7 +14,7 @@ import { FaPaste } from "react-icons/fa6"
 
 const livvic = Livvic({ subsets: ["latin"], weight: "700"})
 const inter = Inter({ subsets: ["latin"]})
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY_TEST)
 
 export default function FilterComments() {
     const router = useRouter()
