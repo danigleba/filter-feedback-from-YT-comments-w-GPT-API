@@ -68,7 +68,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
       }
 
       const data = await response.json()
-      console.log(data)
       return data.data.message.content
     } 
     catch (error) {
@@ -85,13 +84,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
         },
         body: JSON.stringify({ aiResponse }), 
       })
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`)
-      }
-
-      const data = await response.json()
-      console.log(data)
-      return data.data.message.content
     } 
     catch (error) {
       console.error("Error fetching comments:", error.message)
@@ -110,10 +102,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
-
-      const data = await response.json()
-      console.log(data)
-      if (data.data) setStatus("Email sent")
     } 
     catch (error) {
       console.error("Error fetching comments:", error.message)
@@ -127,7 +115,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
     await uploadToFirebase(filteredComments)
     await sendEmail(filteredComments, email)
     router.push(`/report/${email}-${videoId}`)
-    
   }
   return (
     <>
@@ -136,9 +123,8 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
           <LinkAuthenticationElement
             id="email-element"
             options={paymentElementOptions}
-            onChange={(e) => setEmail(e.value.email)}
-            //className="pb-3"
-            />
+            onChange={(e) => setEmail(e.value.email)}/> 
+            {/*className="pb-3"*/}
           {/*Commenting for now as I want users to test the service for Free for now
           <PaymentElement 
             id="payment-element" 
@@ -154,29 +140,19 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
                   <LoadingAnimation />
                 </div> 
                 : 
-                `Checkout $${parseFloat(price).toFixed(2)}`}
+                `Filter comments`} {/*${parseFloat(price).toFixed(2)}`}*/}
             </span>
           </button>
         </form>     
       )}
       {status == "Filtering comments" && (
         <div className="text-center font-bold text-2xl space-y-6 pt-6 md:pt-0">
-          <p className="text-green-400">Payment successful</p>
+          <p className="text-green-400">Succes</p> {/*Payment successful*/}
           <div className="flex items-center justify-center gap-4">
             <p className="text-xl md:text-2xl">Reading your comments...</p>
             <LoadingAnimation />
           </div>
           <p className="text-base font-light">This may take up to a couple of minutes. <br/> Please don"t close this window.</p>
-        </div>
-      )}
-      {status == "Email sent" && (
-        <div className="text-center font-bold pt-6 md:pt-0">
-          <p className="text-green-400 pb-6 text-2xl">Done!</p> 
-          <p className="text-lg text-md pb-3 words-break">Check {email}"s inbox for your user feedback, bug reports and questions</p>
-          <p className="font-light text-base pb-12">Thank you for using Feedby 🥳</p>
-          <a href="https://www.gmail.com" target="_blank">
-            <button className="text-base mb-6">Go to my inbox</button>
-          </a>
         </div>
       )}
     </>

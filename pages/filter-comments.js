@@ -59,7 +59,7 @@ export default function FilterComments() {
         try {
             const response = await fetch(`/api/youtube/getVideo?video_id=${videoId}`)
             if (!response.ok) {
-              Router.reload()
+              router.reload()
             }
             const data = await response.json()
             setVideo(data)

@@ -1,18 +1,23 @@
 import Head from "next/head"
 import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
+import LickingBar from "@/components/LickingBar"
+import SentimentBar from "@/components/SentimentBar"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import { Inter } from "next/font/google"
-import { useEffect, useState } from "react"
-import PosVSNegBar from '@/components/PosVSNegBar'
-import SentimentBar from "@/components/SentimentBar"
 
 const inter = Inter({ subsets: ["latin"]})
 
-export default function Index() {
+export default function Report() {
     const router = useRouter()
     const { report_id } = router.query
     const [report, setReport] = useState()
+    const commentFilters = [
+        { title: 'Feedback', items: report?.feedback || [] },
+        { title: 'Questions', items: report?.questions || [] },
+        { title: 'Bug reports', items: report?.bug_reports || [] },
+    ]
     const [video, setVideo] = useState()
 
     const getReport = async () => {
@@ -28,12 +33,11 @@ export default function Index() {
             }
       
             const data = await response.json()
-            console.log(data.data)
             setReport(data.data)
-          } 
-          catch (error) {
+        } 
+        catch (error) {
             console.error("Error fetching comments:", error.message)
-          } 
+        } 
     }
 
     const getVideo = async (videoId) => {
@@ -41,7 +45,7 @@ export default function Index() {
             const response = await fetch(`/api/youtube/getVideo?video_id=${videoId}`)
             const data = await response.json()
             setVideo(data)
-          } catch (error) {
+        } catch (error) {
             console.log(error)
         }
     }
@@ -81,60 +85,35 @@ export default function Index() {
                 <Header/>
                 <div className="mx-8 md:mx-20 text-center text-sm md:text-base">
                     <p><i>Check your email inbox at {report?.email} for all the data and the link to this page.</i></p>
-                </div>
-                <h2 className="text-center pt-4 mx-8 md:mx-20">{video?.title}'s video report</h2>
-                <PosVSNegBar
-                    positivePercentage={report?.positive_percentage}
-                    negativePercentage={report?.negative_percentage}
-                />
-                <SentimentBar 
-                    supportive={report?.sentiment.supportive}
-                    excited={report?.sentiment.excited}
-                    angry={report?.sentiment.angry}
-                    dissapointed={report?.sentiment.dissapointed}
-                />
-                {/*Comments*/}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between gap-12 text-[#212121] mx-8 md:mx-20 pt-12">
-                    <div className="w-full">
-                        <p className="section-title pb-2">Feedback</p>
-                        <div className="flex flex-col break-words space-y-4">
-                            {report?.feedback.map((item, index) => (
-                                <a key={index}>
-                                    <div className="bg-white rounded-md px-4 py-3">
-                                        <p>{item}</p>
-                                    </div>
-                                </a>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="w-full">
-                        <p className="section-title pb-2">Questions</p>
-                        <div className="flex flex-col break-words space-y-4">
-                            {report?.questions.map((item, index) => (
-                                <a key={index}>
-                                    <div className="bg-white rounded-md px-4 py-3">
-                                        <p>{item}</p>
-                                    </div>
-                                </a>
-                            ))}
-                        </div>
-                       
-                    </div>
-                    <div className="w-full">
-                        <p className="section-title pb-2">Bug reports</p>
-                        <div className="flex flex-col break-words space-y-4">
-                            {report?.bug_reports.map((item, index) => (
-                                <a key={index}>
-                                    <div className="bg-white rounded-md px-4 py-3">
-                                        <p>{item}</p>
-                                    </div>
-                                </a>
-                            ))}
-                        </div>
+                    <h2 className="text-center pt-4 ">{video?.title}'s video report</h2>
+                    <LickingBar
+                        positivePercentage={report?.positive_percentage}
+                        negativePercentage={report?.negative_percentage} />
+                    <SentimentBar 
+                        supportive={report?.sentiment.supportive}
+                        excited={report?.sentiment.excited}
+                        angry={report?.sentiment.angry}
+                        dissapointed={report?.sentiment.dissapointed} />
+                    {/*Comments*/}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-between gap-12 text-[#212121] pt-12">
+                        {commentFilters.map((section, index) => (
+                            <div className="w-full" key={index}>
+                                <p className="section-title pb-2">{section.title}</p>
+                                <div className="flex flex-col break-words space-y-4">
+                                    {section.items.map((item, itemIndex) => (
+                                        <a key={itemIndex}>
+                                            <div className="bg-white rounded-md px-4 py-3">
+                                                <p>{item}</p>
+                                            </div>
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
                 <Footer />
             </main>
         </>
-  )
+    )
 }
