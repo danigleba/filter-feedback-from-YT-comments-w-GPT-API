@@ -1,7 +1,26 @@
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Comment from "./Comment"
 
 export default function Features() {
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        //Checking if the user is on mobile to determine which screenshot to use
+        const checkIfMobile = () => {
+            const isMobileDevice =
+                typeof window !== 'undefined' &&
+                window.innerWidth <= 768
+            setIsMobile(isMobileDevice)
+        }
+        checkIfMobile()
+      
+        window.addEventListener('resize', checkIfMobile);
+      
+        return () => {
+            window.removeEventListener('resize', checkIfMobile);
+        }
+    }, [])
     return (
         <div id="features" className="pt-12 px-8 md:px-20 pb-24">
             <p className="section-title">Filter all unuseful comments</p>
@@ -52,7 +71,7 @@ export default function Features() {
                     </div>
                 </div>
             </div>
-            <p className="section-title pt-24">And get all feature requests and bug reports in your inbox</p>
+            <p className="section-title pt-24">Get all feature requests and bug reports in your inbox</p>
             {/*Good comments*/}
             <div className="flex flex-wrap items-start justify-center gap-6 w-full">
                 <Comment 
@@ -77,9 +96,13 @@ export default function Features() {
                     image="/comments/cjpettigrew.jpeg" />
                 <Comment 
                     time="2 weeks ago"
-                    comment="Please make sure you update license to BSL license if not I would see Cloud operators selling the same.                        " 
+                    comment="Please make sure you update license to BSL license if not I would see Cloud operators selling the same." 
                     username="@jamessathyapal"
                     image="/comments/jamessathyapal.jpeg" />    
+            </div>
+            <p className="section-title pt-24">See how your users feel about the video</p>
+            <div className="px-2 py-2 bg-white rounded-lg">
+                <div className={`w-full aspect-[9/16] md:aspect-video bg-cover bg-top md:bg-center rounded-lg ${isMobile ? "bg-[url('/screenshot-mobile.png')]" : "bg-[url('/screenshot.png')]"}`}></div>
             </div>
         </div>
     )

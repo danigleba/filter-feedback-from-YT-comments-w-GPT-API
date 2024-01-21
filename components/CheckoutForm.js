@@ -147,7 +147,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId, 
       )}
       {status == "Filtering comments" && (
         <div className="text-center font-bold text-2xl space-y-6 pt-6 md:pt-0">
-          <p className="text-green-400">Succes</p> {/*Payment successful*/}
+          <p className="text-green-400">Succes!</p> {/*Payment successful*/}
           <div className="flex items-center justify-center gap-4">
             <p className="text-xl md:text-2xl">Reading your comments...</p>
             <LoadingAnimation />
