@@ -62,4 +62,12 @@
   .legal-doc {
     @apply flex justify-center items-center w-full px-8 md:px-20;
   }
+
+  .graph-line {
+    @apply flex items-center justify-center h-full;
+  }
+
+  .graph-legend {
+    @apply w-full px-2 py-2 rounded-lg  border-white border;
+  }
 }

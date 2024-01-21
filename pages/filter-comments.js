@@ -14,7 +14,7 @@ import { FaPaste } from "react-icons/fa6"
 
 const livvic = Livvic({ subsets: ["latin"], weight: "700"})
 const inter = Inter({ subsets: ["latin"]})
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY)
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY_TEST)
 
 export default function FilterComments() {
     const router = useRouter()
@@ -59,7 +59,7 @@ export default function FilterComments() {
         try {
             const response = await fetch(`/api/youtube/getVideo?video_id=${videoId}`)
             if (!response.ok) {
-              Router.reload()
+              router.reload()
             }
             const data = await response.json()
             setVideo(data)
@@ -144,7 +144,8 @@ export default function FilterComments() {
                                             <CheckoutForm 
                                                 clientSecret={clientSecret} 
                                                 numberOfComments={video?.numberOfComments} 
-                                                videoId={videoId}/>
+                                                videoId={videoId}
+                                                videoTitle={video.title}/>
                                         </Elements>        
                                     )}
                                 </div>

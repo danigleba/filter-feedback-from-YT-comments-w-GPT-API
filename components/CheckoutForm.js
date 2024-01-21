@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
 import { PaymentElement, useStripe, useElements, LinkAuthenticationElement } from "@stripe/react-stripe-js"
 import LoadingAnimation from "./LoadingAnimation"
 
-export default function CheckoutForm({ clientSecret, numberOfComments, videoId }) {
+export default function CheckoutForm({ clientSecret, numberOfComments, videoId, videoTitle }) {
+  const router = useRouter()
   const stripe = useStripe()
   const elements = useElements()
   const paymentElementOptions = {
@@ -15,23 +17,21 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
   
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!stripe || !elements) {
-      return
-    }
-
     setIsLoading(true)
+    handleSuccesfulPayment() 
+    /*Commenting for now as I want users to test the service for Free for now
     const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: "http://localhost:300",
-      },
-      redirect: "if_required"
-    })
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      if (paymentIntent.status == "requires_payment_method") setIsLoading(false)
-      if (paymentIntent.status == "succeeded") handleSuccesfulPayment()
-    })
+        elements,
+        confirmParams: {
+          return_url: "http://localhost:300",
+        },
+        redirect: "if_required"
+      })
+  
+      stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+        if (paymentIntent.status == "requires_payment_method") setIsLoading(false)
+        if (paymentIntent.status == "succeeded") handleSuccesfulPayment()
+    })*/
   }
 
   const getAllComments = async () => {
@@ -75,9 +75,24 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
     } 
   }
 
+  const uploadToFirebase = async (aiResponse) => {
+    try {
+      const response = await fetch(`/api/firebase/uploadReport?email=${email}&videoId=${videoId}`, {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ aiResponse }), 
+      })
+    } 
+    catch (error) {
+      console.error("Error fetching comments:", error.message)
+    } 
+  }
+
   const sendEmail = async (filteredComments, email) => {
     try {
-      const response = await fetch(`/api/resend/sendEmail?email=${email}`, {
+      const response = await fetch(`/api/resend/sendEmail?email=${email}&videoId=${videoId}&videoTitle=${videoTitle}`, {
         method: "POST", 
         headers: {
           "Content-Type": "application/json",
@@ -87,9 +102,6 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`)
       }
-
-      const data = await response.json()
-      if (data.data) setStatus("Email sent")
     } 
     catch (error) {
       console.error("Error fetching comments:", error.message)
@@ -100,7 +112,9 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
     setStatus("Filtering comments")
     const comments = await getAllComments()
     const filteredComments = await filterComments(comments)
-    sendEmail(filteredComments, email)
+    await uploadToFirebase(filteredComments)
+    await sendEmail(filteredComments, email)
+    router.push(`/report/${email}-${videoId}`)
   }
   return (
     <>
@@ -109,11 +123,12 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
           <LinkAuthenticationElement
             id="email-element"
             options={paymentElementOptions}
-            onChange={(e) => setEmail(e.value.email)}
-            className="pb-3"/>
+            onChange={(e) => setEmail(e.value.email)}/> 
+            {/*className="pb-3"*/}
+          {/*Commenting for now as I want users to test the service for Free for now
           <PaymentElement 
             id="payment-element" 
-            options={paymentElementOptions}/>
+            options={paymentElementOptions}/>*/}
           <button 
             id="submit"
             disabled={isLoading || !stripe || !elements}
@@ -125,29 +140,19 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
                   <LoadingAnimation />
                 </div> 
                 : 
-                `Checkout $${parseFloat(price).toFixed(2)}`}
+                `Filter comments`} {/*${parseFloat(price).toFixed(2)}`}*/}
             </span>
           </button>
         </form>     
       )}
       {status == "Filtering comments" && (
         <div className="text-center font-bold text-2xl space-y-6 pt-6 md:pt-0">
-          <p className="text-green-400">Payment successful</p>
+          <p className="text-green-400">Succes</p> {/*Payment successful*/}
           <div className="flex items-center justify-center gap-4">
             <p className="text-xl md:text-2xl">Reading your comments...</p>
             <LoadingAnimation />
           </div>
           <p className="text-base font-light">This may take up to a couple of minutes. <br/> Please don"t close this window.</p>
-        </div>
-      )}
-      {status == "Email sent" && (
-        <div className="text-center font-bold pt-6 md:pt-0">
-          <p className="text-green-400 pb-6 text-2xl">Done!</p> 
-          <p className="text-lg text-md pb-3 words-break">Check {email}"s inbox for your user feedback, bug reports and questions</p>
-          <p className="font-light text-base pb-12">Thank you for using Feedby 🥳</p>
-          <a href="https://www.gmail.com" target="_blank">
-            <button className="text-base mb-6">Go to my inbox</button>
-          </a>
         </div>
       )}
     </>
