@@ -144,7 +144,8 @@ export default function FilterComments() {
                                             <CheckoutForm 
                                                 clientSecret={clientSecret} 
                                                 numberOfComments={video?.numberOfComments} 
-                                                videoId={videoId}/>
+                                                videoId={videoId}
+                                                videoTitle={video.title}/>
                                         </Elements>        
                                     )}
                                 </div>

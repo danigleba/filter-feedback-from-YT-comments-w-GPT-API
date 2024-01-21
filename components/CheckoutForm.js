@@ -1,8 +1,10 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
 import { PaymentElement, useStripe, useElements, LinkAuthenticationElement } from "@stripe/react-stripe-js"
 import LoadingAnimation from "./LoadingAnimation"
 
-export default function CheckoutForm({ clientSecret, numberOfComments, videoId }) {
+export default function CheckoutForm({ clientSecret, numberOfComments, videoId, videoTitle }) {
+  const router = useRouter()
   const stripe = useStripe()
   const elements = useElements()
   const paymentElementOptions = {
@@ -15,23 +17,21 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
   
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!stripe || !elements) {
-      return
-    }
-
     setIsLoading(true)
+    handleSuccesfulPayment() 
+    /*Commenting for now as I want users to test the service for Free for now
     const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: "http://localhost:300",
-      },
-      redirect: "if_required"
-    })
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      if (paymentIntent.status == "requires_payment_method") setIsLoading(false)
-      if (paymentIntent.status == "succeeded") handleSuccesfulPayment()
-    })
+        elements,
+        confirmParams: {
+          return_url: "http://localhost:300",
+        },
+        redirect: "if_required"
+      })
+  
+      stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+        if (paymentIntent.status == "requires_payment_method") setIsLoading(false)
+        if (paymentIntent.status == "succeeded") handleSuccesfulPayment()
+    })*/
   }
 
   const getAllComments = async () => {
@@ -100,7 +100,7 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
 
   const sendEmail = async (filteredComments, email) => {
     try {
-      const response = await fetch(`/api/resend/sendEmail?email=${email}&videoId=${videoId}`, {
+      const response = await fetch(`/api/resend/sendEmail?email=${email}&videoId=${videoId}&videoTitle=${videoTitle}`, {
         method: "POST", 
         headers: {
           "Content-Type": "application/json",
@@ -125,7 +125,9 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
     const comments = await getAllComments()
     const filteredComments = await filterComments(comments)
     await uploadToFirebase(filteredComments)
-    sendEmail(filteredComments, email)
+    await sendEmail(filteredComments, email)
+    router.push(`/report/${email}-${videoId}`)
+    
   }
   return (
     <>
@@ -135,10 +137,12 @@ export default function CheckoutForm({ clientSecret, numberOfComments, videoId }
             id="email-element"
             options={paymentElementOptions}
             onChange={(e) => setEmail(e.value.email)}
-            className="pb-3"/>
+            //className="pb-3"
+            />
+          {/*Commenting for now as I want users to test the service for Free for now
           <PaymentElement 
             id="payment-element" 
-            options={paymentElementOptions}/>
+            options={paymentElementOptions}/>*/}
           <button 
             id="submit"
             disabled={isLoading || !stripe || !elements}

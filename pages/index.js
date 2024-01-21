@@ -22,7 +22,7 @@ export default function Index() {
         <meta property="og:title" content="Feedby | Filter user feedback from your comment section" />
         <meta property="og:description" content="Your YouTube videos' comment section is filled with great user insight. But filtering the thousands of meaningless comments is too time-consuming. Let our AI do that for you and get all that user feedback, questions and bug reports in your inbox." />
         <meta property="og:image" content="/icon.png" />
-        <meta property="og:url" content="getFeedby.com" />
+        <meta property="og:url" content="feedby.danigleba.com" />
         <meta property="og:type" content="website" />
         {/* Twitter Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />

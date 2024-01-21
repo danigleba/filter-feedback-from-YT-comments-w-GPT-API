@@ -15,12 +15,14 @@ export default async function handler(req, res) {
         feedback: JSONData.useful_feedback,
         questions: JSONData.questions,
         bug_reports: JSONData.bug_reports,
-        negative_percentage: JSONData.negative_percentage || 0,
-        positive_persentage: JSONData.positive_persentage || 0,
-        angry: JSONData.angry || 0,
-        dissapointed: JSONData.dissapointed || 0,
-        supportive: JSONData.supportive || 0,
-        exited: JSONData.exited || 0,
+        negative_percentage: JSONData.negative_percentage || 0,
+        positive_percentage: JSONData.positive_percentage || 0,
+        sentiment: {
+          angry: JSONData.sentiment.angry || 0,
+          dissapointed: JSONData.sentiment.dissapointed || 0,
+          supportive: JSONData.sentiment.supportive || 0,
+          excited: JSONData.sentiment.excited || 0,
+        }
       })
       res.status(201).json({ data: newReport })
     } catch (error) {
